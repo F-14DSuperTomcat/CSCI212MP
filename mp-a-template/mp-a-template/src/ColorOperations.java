@@ -54,5 +54,5 @@ class ColorOperations {
     static int getBlue(int rgb) {
         return rgb & 0xFF;
     }
-
+//test commit
 }
