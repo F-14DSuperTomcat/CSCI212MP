@@ -1,6 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+<<<<<<< Updated upstream
+=======
+import java.io.*;
+import java.util.Scanner;
+>>>>>>> Stashed changes
 import java.util.Stack;
 
 class ImageEditor extends JPanel {
@@ -67,16 +72,29 @@ class ImageEditor extends JPanel {
     }
 
     /**
-     * TODO.
-     *
-     * @param out TODO.
+     * takes a given String representing a file path to an image, and converts the image
+     * into a ppm file
+     * @param out String that represents the file path to an image
      */
     void writePpmImage(String out) {
-        try {
+        try(PrintWriter pw = new PrintWriter(new FileWriter(out))) {
             BufferedImage img = this.getImage();
-            // TODO write the image to the PPM file.
-
-        } catch (RuntimeException e) { // <- this will need to be a different exception!
+            int w = img.getWidth();
+            int h = img.getHeight();
+            String ppmResult = "P3" + "\n" + w + " " + h + "\n" + "255" + "\n";
+            pw.print(ppmResult);
+            for(int y = 0; y < h; y++){
+                for(int x = 0; x < w; x++){
+                    int pixel = img.getRGB(x, y);
+                    Color c = new Color(pixel);
+                    int r = c.getRed();
+                    int g = c.getGreen();
+                    int b = c.getBlue();
+                    pw.print(r + " " + g + " " + b + " ");
+                }
+                pw.println();
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
