@@ -22,10 +22,31 @@ class ImageOperations {
      * @return TODO.
      */
     static BufferedImage grayscale(BufferedImage img) {
-        // TODO.
-        BufferedImage newImg = null;
-        return newImg;
+
+        int width  = img.getWidth();
+        int height = img.getHeight();
+
+        BufferedImage newImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+
+        int rgb = img.getRGB(x, y);
+        Color color = new Color (rgb);
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+
+        int gray  = (r + g + b)/3;
+            Color grayColor = new Color(gray, gray, gray);
+
+            newImg.setRGB(x, y, grayColor.getRGB());
+        }
     }
+
+    return newImg;
+}
 
     /**
      * TODO.
