@@ -1,11 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-<<<<<<< Updated upstream
-=======
+
 import java.io.*;
 import java.util.Scanner;
->>>>>>> Stashed changes
 import java.util.Stack;
 
 class ImageEditor extends JPanel {
@@ -54,19 +52,27 @@ class ImageEditor extends JPanel {
      */
     void readPpmImage(String in) {
         try {
-            // TODO read the PPM image file into the "img" variable.
-            // Read the width, height into the "width" and "height" variables.
-            int width = 0;
-            int height = 0;
-            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-            // TODO Read the pixel data.
+            Scanner sc = new Scanner(new File(in));
+            sc.nextLine();
+            int width = sc.nextInt();
+            int height = sc.nextInt();
+            BufferedImage img = new BufferedImage(width, height, 1);
+            sc.nextInt();
 
-            // Do not modify the lines below.
+            for(int h = 0; h < height; ++h) {
+                for(int w = 0; w < width; ++w) {
+                    int red = (sc.nextInt() & 255) << 16;
+                    int green = (sc.nextInt() & 255) << 8;
+                    int blue = sc.nextInt() & 255;
+                    img.setRGB(w, h, red | green | blue);
+                }
+            }
+
             this.UNDO_STACK.clear();
             this.REDO_STACK.clear();
             this.zoomImageIndex = 0;
             this.addImage(img);
-        } catch (RuntimeException e) { // <- this will need to be a different exception!
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
