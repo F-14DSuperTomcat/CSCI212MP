@@ -6,7 +6,7 @@ class ToolsMenu extends JMenu {
         super("Tools");
         // Create the menu items and disable them.
         JMenuItem zeroRed = new ZeroRedMenuItem(mainPanel);
-        zeroRed.setEnabled(false);
+        zeroRed.setEnabled(true);
         JMenuItem grayscale = new GrayscaleMenuItem(mainPanel);
         grayscale.setEnabled(false);
         JMenuItem invert = new InvertMenuItem(mainPanel);

@@ -46,9 +46,8 @@ class ImageEditor extends JPanel {
     }
 
     /**
-     * Read the given PPM image file in the image editor
-     *
-     * @param in the given PPM image file to be read
+     * Read the given PPM image file in the image editor.
+     * @param in the given PPM image file to be read.
      */
     void readPpmImage(String in) {
         try {
@@ -63,10 +62,8 @@ class ImageEditor extends JPanel {
             // TODO Read the pixel data.
             for (int h = 0; h < height; h++){
                 for(int w = 0; w < width; w++){
-                    int red = (sc.nextInt() & 0xFF) << 16;
-                    int green = (sc.nextInt() & 0xFF) << 8;
-                    int blue = sc.nextInt() & 0xFF;
-                    img.setRGB(w, h, red | green | blue);
+                    Color rgb = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
+                    img.setRGB(w, h, rgb.getRGB());
                 }
             }
             // Do not modify the lines below.

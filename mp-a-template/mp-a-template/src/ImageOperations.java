@@ -1,17 +1,29 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Scanner;
+
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 class ImageOperations {
 
     /**
-     * TODO.
-     *
-     * @param img TODO.
-     * @return TODO.
+     * Makes all the red channels for the given image 0
+     * @param img the given image to have its red channels put to zero
+     * @return the image with all its red channels put to zero
      */
     static BufferedImage zeroRed(BufferedImage img) {
         // TODO.
-        BufferedImage newImg = null;
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        BufferedImage newImg = new BufferedImage(width, height, img.getType());
+        for (int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                Color rgb = new Color(img.getRGB(w, h));
+                Color noRed = new Color(0, rgb.getGreen(), rgb.getBlue());
+                newImg.setRGB(w, h, noRed.getRGB());
+            }
+        }
         return newImg;
     }
 
@@ -105,7 +117,7 @@ class ImageOperations {
     static BufferedImage zoom(BufferedImage img, double zoomFactor) {
         int newImageWidth = (int) (img.getWidth() * zoomFactor);
         int newImageHeight = (int) (img.getHeight() * zoomFactor);
-        BufferedImage newImg = new BufferedImage(newImageWidth, newImageHeight, BufferedImage.TYPE_INT_RGB);
+        BufferedImage newImg = new BufferedImage(newImageWidth, newImageHeight, TYPE_INT_RGB);
         Graphics2D g2d = newImg.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2d.drawImage(img, 0, 0, newImageWidth, newImageHeight, null);
