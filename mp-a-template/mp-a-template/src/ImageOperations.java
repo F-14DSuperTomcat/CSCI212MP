@@ -51,19 +51,33 @@ class ImageOperations {
     }
 
     /**
-     * TODO.
-     *
-     * @param img TODO.
-     * @param dir TODO.
-     * @return TODO.
+     * Mirrors the given image in the given direction
+     * @param img the given image to be mirrored
+     * @param dir the given direction for img to be mirrored in
+     * @return the mirrored version of img mirrored by dir
      */
     static BufferedImage mirror(BufferedImage img, MirrorMenuItem.MirrorDirection dir) {
         // TODO instantiate newImg with the *correct* dimensions.
-        BufferedImage newImg = null;
+        int width = img.getWidth();
+        int height = img.getHeight();
+        BufferedImage newImg = new BufferedImage(width, height, img.getType());
         if (dir == MirrorMenuItem.MirrorDirection.VERTICAL) {
             // TODO mirror the image vertically.
+            for (int h = 0; h < height; h++){
+                for(int w = 0; w < width / 2; w++){
+
+                    newImg.setRGB(w, h, img.getRGB(w, h));
+                    newImg.setRGB(width - w - 1, h, img.getRGB(w, h));
+                }
+            }
         } else {
             // TODO mirror the image horizontally.
+            for (int h = 0; h < height / 2; h++){
+                for(int w = 0; w < width; w++){
+                    newImg.setRGB(w, h, img.getRGB(w, h));
+                    newImg.setRGB(w, height - h - 1, img.getRGB(w, h));
+                }
+            }
         }
         return newImg;
     }
