@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 class ImageOperations {
 
@@ -70,19 +71,31 @@ class ImageOperations {
     }
 
     /**
-     * TODO.
-     *
-     * @param img TODO.
-     * @param dir TODO.
-     * @return TODO.
+     * takes a given, opened BufferedImage and the direction that the image is to be rotated,
+     * and returns a new BufferedImage that is the same as the original, but rotated in the
+     * given direction
+     * @param img given BufferedImage
+     * @param dir direction that the image is to be rotated
+     * @return new BufferedImage same as the original, but rotated the given direction
      */
     static BufferedImage rotate(BufferedImage img, RotateMenuItem.RotateDirection dir) {
-        // TODO instantiate newImg with the *correct* dimensions.
-        BufferedImage newImg = null;
+        BufferedImage newImg = new BufferedImage(img.getHeight(), img.getWidth(),img.getType());
+        int width = img.getWidth();
+        int height = img.getHeight();
         if (dir == RotateMenuItem.RotateDirection.CLOCKWISE) {
-            // TODO rotate the image clockwise.
+            for(int y = 0; y < height; y++){
+                for(int x = 0; x < width; x++){
+                    int pixel = img.getRGB(x, y);
+                    newImg.setRGB(height - 1 - y, x, pixel);
+                }
+            }
         } else {
-            // TODO rotate the image counter-clockwise.
+            for(int y = 0; y < height; y++){
+                for(int x = 0; x < width; x++){
+                    int pixel = img.getRGB(x, y);
+                    newImg.setRGB(y, width - 1 - x, pixel);
+                }
+            }
         }
         return newImg;
     }

@@ -16,7 +16,7 @@ class ToolsMenu extends JMenu {
         JMenuItem repeat = new RepeatMenuItem(mainPanel);
         repeat.setEnabled(false);
         JMenuItem rotate = new RotateMenuItem(mainPanel);
-        rotate.setEnabled(false);
+        rotate.setEnabled(true);
 
         // Add the menu items to the menu.
         this.add(zeroRed);
