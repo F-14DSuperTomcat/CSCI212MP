@@ -28,13 +28,26 @@ class ImageOperations {
     }
 
     /**
-     * TODO.
-     * @param img TODO.
-     * @return TODO.
+     * Edits the opened BufferedImage in the editor application by inverting the colors of
+     * every pixel, returning a new BufferedImage that is a negative of the original.
+     * @param img the given, opened BufferedImage
+     * @return a new BufferedImage with all pixel colors inverted
      */
     static BufferedImage invert(BufferedImage img) {
-        // TODO.
-        BufferedImage newImg = null;
+        BufferedImage newImg = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        int width = newImg.getWidth();
+        int height = newImg.getHeight();
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                int pixel = img.getRGB(x, y);
+                Color c = new Color(pixel);
+                int r = 255 - c.getRed();
+                int g = 255 - c.getGreen();
+                int b = 255 - c.getBlue();
+                Color invC = new Color(r, g, b);
+                newImg.setRGB(x, y, invC.getRGB());
+            }
+        }
         return newImg;
     }
 

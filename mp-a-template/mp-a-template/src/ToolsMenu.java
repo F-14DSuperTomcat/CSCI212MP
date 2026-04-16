@@ -10,7 +10,7 @@ class ToolsMenu extends JMenu {
         JMenuItem grayscale = new GrayscaleMenuItem(mainPanel);
         grayscale.setEnabled(false);
         JMenuItem invert = new InvertMenuItem(mainPanel);
-        invert.setEnabled(false);
+        invert.setEnabled(true);
         JMenuItem mirror = new MirrorMenuItem(mainPanel);
         mirror.setEnabled(false);
         JMenuItem repeat = new RepeatMenuItem(mainPanel);
