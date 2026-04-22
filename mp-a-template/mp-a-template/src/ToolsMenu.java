@@ -14,7 +14,7 @@ class ToolsMenu extends JMenu {
         JMenuItem mirror = new MirrorMenuItem(mainPanel);
         mirror.setEnabled(false);
         JMenuItem repeat = new RepeatMenuItem(mainPanel);
-        repeat.setEnabled(false);
+        repeat.setEnabled(true);
         JMenuItem rotate = new RotateMenuItem(mainPanel);
         rotate.setEnabled(false);
 

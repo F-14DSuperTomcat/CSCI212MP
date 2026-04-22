@@ -103,14 +103,37 @@ class ImageOperations {
      * @param dir TODO.
      * @return TODO.
      */
-    static BufferedImage repeat(BufferedImage img, int n, RepeatMenuItem.RepeatDirection dir) {
-        BufferedImage newImg = null;
-        // newImg must be instantiated in both branches with the correct dimensions.
-        if (dir == RepeatMenuItem.RepeatDirection.HORIZONTAL) {
-            // TODO repeat the image horizontally.
-        } else {
-            // TODO repeat the image vertically.
+static BufferedImage repeat(BufferedImage img, int n, RepeatMenuItem.RepeatDirection dir) {
+
+    int width = img.getWidth();
+    int height = img.getHeight();
+
+    BufferedImage newImg = null;
+
+    if (dir == RepeatMenuItem.RepeatDirection.HORIZONTAL) {
+        newImg = new BufferedImage(width * n, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < n; i++) {
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    int rgb = img.getRGB(x, y);
+                    newImg.setRGB(x + i * width, y, rgb);
+                }
+            }
         }
+
+    } else {
+        newImg = new BufferedImage(width, height * n, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < n; i++) {
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    int rgb = img.getRGB(x, y);
+                    newImg.setRGB(x, y + i * height, rgb);
+                }
+            }
+        }
+    }
         return newImg;
     }
 
