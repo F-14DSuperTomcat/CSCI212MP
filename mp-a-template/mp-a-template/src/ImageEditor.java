@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -53,28 +54,18 @@ class ImageEditor extends JPanel {
     void readPpmImage(String in) {
         try {
             // TODO read the PPM image file into the "img" variable.
-            Scanner sc = new Scanner(new File(in));
-            sc.nextLine();
             // Read the width, height into the "width" and "height" variables.
-            int width = sc.nextInt();
-            int height = sc.nextInt();
+            int width = 0;
+            int height = 0;
             BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-            sc.nextInt();
             // TODO Read the pixel data.
-            for (int h = 0; h < height; h++){
-                for(int w = 0; w < width; w++){
-                    int red = (sc.nextInt() & 0xFF) << 16;
-                    int green = (sc.nextInt() & 0xFF) << 8;
-                    int blue = sc.nextInt() & 0xFF;
-                    img.setRGB(w, h, red | green | blue);
-                }
-            }
+
             // Do not modify the lines below.
             this.UNDO_STACK.clear();
             this.REDO_STACK.clear();
             this.zoomImageIndex = 0;
             this.addImage(img);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
