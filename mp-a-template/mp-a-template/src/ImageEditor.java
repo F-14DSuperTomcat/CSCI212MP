@@ -65,7 +65,7 @@ class ImageEditor extends JPanel {
             this.REDO_STACK.clear();
             this.zoomImageIndex = 0;
             this.addImage(img);
-        } catch (IOException e) {
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
