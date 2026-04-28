@@ -7,6 +7,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class WeatherForecast {
     public static void main(String[] args) {
@@ -33,6 +35,20 @@ public class WeatherForecast {
                     JsonObject jObject = jElement.getAsJsonObject().getAsJsonObject("hourly");
                     JsonArray jsonArray1 = jObject.getAsJsonArray("time");
                     JsonArray jsonArray2 = jObject.getAsJsonArray("temperature_2m");
+
+                        System.out.println("7-Day Forecast in Fahrenheit:");
+                        int currentHour = LocalDateTime.now(ZoneId.of("America/New_York")).getHour();
+                        String currentDate = "";
+                        for(int i = currentHour; i < jsonArray1.size(); i += 3){
+                            String timeString = jsonArray1.get(i).getAsString();
+                            String dayString = timeString.substring(0, timeString.indexOf('T'));
+                            String hourString = timeString.substring(timeString.indexOf('T') + 1);
+                            if(!(currentDate.equals(dayString))){
+                                System.out.println("Forecast for " + dayString + ":");
+                                currentDate = dayString;
+                            }
+                            System.out.println(hourString + ": " + String.format("%.1f", jsonArray2.get(i).getAsDouble()) + "\u00B0F");
+                        }
                 }
             }catch (IOException e){
                 throw new RuntimeException(e);
@@ -43,6 +59,5 @@ public class WeatherForecast {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
