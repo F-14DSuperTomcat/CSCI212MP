@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -47,40 +45,61 @@ class ImageEditor extends JPanel {
     }
 
     /**
-     * Read the given PPM image file in the image editor
-     *
-     * @param in the given PPM image file to be read
+     * Read the given PPM image file in the image editor.
+     * @param in the given PPM image file to be read.
      */
     void readPpmImage(String in) {
         try {
             // TODO read the PPM image file into the "img" variable.
+            Scanner sc = new Scanner(new File(in));
+            sc.nextLine();
             // Read the width, height into the "width" and "height" variables.
-            int width = 0;
-            int height = 0;
+            int width = sc.nextInt();
+            int height = sc.nextInt();
             BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            sc.nextInt();
             // TODO Read the pixel data.
+            for (int h = 0; h < height; h++){
+                for(int w = 0; w < width; w++){
+                    Color rgb = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
+                    img.setRGB(w, h, rgb.getRGB());
+                }
+            }
 
             // Do not modify the lines below.
             this.UNDO_STACK.clear();
             this.REDO_STACK.clear();
             this.zoomImageIndex = 0;
             this.addImage(img);
-        } catch (RuntimeException e) {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * TODO.
-     *
-     * @param out TODO.
+     * takes a given String representing a file path to an image, and converts the image
+     * into a ppm file
+     * @param out String that represents the file path to an image
      */
     void writePpmImage(String out) {
-        try {
+        try(PrintWriter pw = new PrintWriter(new FileWriter(out))) {
             BufferedImage img = this.getImage();
-            // TODO write the image to the PPM file.
-
-        } catch (RuntimeException e) { // <- this will need to be a different exception!
+            int w = img.getWidth();
+            int h = img.getHeight();
+            String ppmResult = "P3" + "\n" + w + " " + h + "\n" + "255" + "\n";
+            pw.print(ppmResult);
+            for(int y = 0; y < h; y++){
+                for(int x = 0; x < w; x++){
+                    int pixel = img.getRGB(x, y);
+                    Color c = new Color(pixel);
+                    int r = c.getRed();
+                    int g = c.getGreen();
+                    int b = c.getBlue();
+                    pw.print(r + " " + g + " " + b + " ");
+                }
+                pw.println();
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
